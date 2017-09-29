@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  proxy:
+    image: traefik
+    command: --web --docker --docker.domain=soms.localhost --logLevel=DEBUG
+    networks:
+      - proxygw
+    ports:
+      - "9080:80"
+      - "9081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+
+networks:
+  proxygw:
+    driver: bridge
